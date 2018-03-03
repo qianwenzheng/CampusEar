@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import io
 import os
 
@@ -32,15 +31,4 @@ response = client.recognize(config, audio)
 print("ended")
 for result in response.results:
     print('Transcript: {}'.format(result.alternatives[0].transcript))
-=======
-from flask import Flask, render_template
 
-app = Flask(__name__)
-
-@app.route("/")
-def AudioReader():
-    return render_template("index.html")
-
-if __name__ == "__main__":
-    app.run(debug=True,port=1033)
->>>>>>> a2e8f411d4e0d31958dabdbc85563e74be151b4c
