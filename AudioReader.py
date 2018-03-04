@@ -73,7 +73,13 @@ while True:
             server.starttls()
             server.login("campusear@gmail.com", "campusearpassword")
             
-            msg = transcrpt
+            msg = "\r\n".join([
+                    "From: " + "campusear@gmail.com",
+                    "To: " + usr_eml,
+                    "Subject: Something of interest came up",
+                    "",
+                    transcrpt
+                    ])
             server.sendmail("campusear@gmail.com", usr_eml, msg)
             print(msg)
             server.quit()
