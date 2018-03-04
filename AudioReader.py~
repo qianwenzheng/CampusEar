@@ -42,5 +42,5 @@ def AudioReader():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True,port=1034)
+    app.run(debug=True,port=1037)
 # >>>>>>> a2e8f411d4e0d31958dabdbc85563e74be151b4c
