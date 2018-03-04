@@ -3,11 +3,13 @@ from flask import request
 import smtplib
 import io
 import os
-
+import time
 # Imports the Google Cloud client library
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+
+from subprocess import Popen
 
 app = Flask(__name__)
 
@@ -21,14 +23,17 @@ transcrpt = 'Williams College'
 @app.route('/', methods=['GET','POST'])
 
 def AudioReader():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"/Users/Xiao/Desktop/appstuff/CampusEar/CampusEar-2b476fe18f5a.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\seanl\Downloads\CampusEar-2b476fe18f5a.json"
+    Popen("script.bat", cwd=r"C:\Users\seanl\Documents\GitHub\CampusEar")
+    time.sleep(2)
 # # Instantiates a client
     client = speech.SpeechClient()
 # The name of the audio file to transcribe
     file_name = os.path.join(
         os.path.dirname(__file__),
         'resources',
-        'testAudio.flac')#change this later
+        'output',
+        'output')#change this later
 # Loads the audio into memory
     with io.open(file_name, 'rb') as audio_file:
         content = audio_file.read()
@@ -36,7 +41,7 @@ def AudioReader():
 
     config = types.RecognitionConfig(
             encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
-            sample_rate_hertz=48000,
+            sample_rate_hertz=44100,
             language_code='en-US')#
 # Detects speech in the audio file
     response = client.recognize(config, audio)
@@ -68,4 +73,6 @@ def AudioReader():
 
 if __name__ == "__main__":
     app.run(debug=True,port=1051)
+
+
 
