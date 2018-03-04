@@ -35,15 +35,19 @@
 # =======
 from flask import Flask, render_template
 from flask import request
+import smtplib
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET','POST'])
+#@app.route('/', methods=['GET','POST'])
 
 usr_loc = None
 usr_eml = None
 num_mins = None
 phrases = None
+police = None
+
+@app.route('/', methods=['GET','POST'])
 
 def AudioReader():
     usr_loc = request.form.get('Location')
@@ -55,9 +59,17 @@ def AudioReader():
     print(usr_eml)
     print(num_mins)
     print(phrases)
-
+    
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("campusear@gmail.com", "campusearpassword")
+    
+    msg = "YOUR MESSAGE!"
+    server.sendmail("campusear@gmail.com", "qz3@williams.edu", msg)
+    server.quit()
+    
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True,port=1040)
+    app.run(debug=True,port=1042)
 # >>>>>>> a2e8f411d4e0d31958dabdbc85563e74be151b4c
