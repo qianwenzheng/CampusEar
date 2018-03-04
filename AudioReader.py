@@ -77,6 +77,7 @@ while True:
             server.sendmail("campusear@gmail.com", usr_eml, msg)
             print(msg)
             server.quit()
+        os.remove(file_name)
 
 
         os.remove(r"C:\Users\seanl\Documents\GitHub\CampusEar\resources\output" +"\\" + file_name)
