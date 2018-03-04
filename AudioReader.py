@@ -69,6 +69,7 @@ def AudioReader():
             msg = transcrpt
             server.sendmail("campusear@gmail.com", "qz3@williams.edu", msg)
             server.quit()
+        os.remove(file_name)
 
     return render_template("index.html")
 

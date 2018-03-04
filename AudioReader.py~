@@ -16,7 +16,6 @@ usr_eml = None
 num_mins = None
 phrases = None
 police = None
-singleAud = ''
 transcrpt = 'Williams College'
 
 @app.route('/', methods=['GET','POST'])
