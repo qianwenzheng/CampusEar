@@ -14,9 +14,9 @@ from subprocess import Popen
 app = Flask(__name__)
 
 usr_loc = None
-usr_eml = "qz3@williams.edu"
+usr_eml = None
 num_mins = None
-phrases = "car"
+phrases = None
 police = None
 transcrpt = 'Williams College'
 
@@ -62,7 +62,7 @@ while True:
             transcrpt = ('Transcript: {}'.format(result.alternatives[0].transcript))
             # print(transcrpt)
         print(phrases)
-        # print(phrases in transcrpt)
+        print(transcrpt)
 
         if (phrases != None) and (phrases in transcrpt):
             print("we have a match!!!!!")
