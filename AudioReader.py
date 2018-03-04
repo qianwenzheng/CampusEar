@@ -14,65 +14,72 @@ from subprocess import Popen
 app = Flask(__name__)
 
 usr_loc = None
-usr_eml = None
+usr_eml = "qz3@williams.edu"
 num_mins = None
-phrases = None
+phrases = "car"
 police = None
 transcrpt = 'Williams College'
 
 @app.route('/', methods=['GET','POST'])
 
 def AudioReader():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\seanl\Downloads\CampusEar-2b476fe18f5a.json"
-    Popen("script.bat", cwd=r"C:\Users\seanl\Documents\GitHub\CampusEar")
-    time.sleep(2)
-# # Instantiates a client
-    client = speech.SpeechClient()
-# The name of the audio file to transcribe
-    file_name = os.path.join(
-        os.path.dirname(__file__),
-        'resources',
-        'output',
-        'output')#change this later
-# Loads the audio into memory
-    with io.open(file_name, 'rb') as audio_file:
-        content = audio_file.read()
-        audio = types.RecognitionAudio(content=content)
-
-    config = types.RecognitionConfig(
-            encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
-            sample_rate_hertz=44100,
-            language_code='en-US')#
-# Detects speech in the audio file
-    response = client.recognize(config, audio)
-    print("ended")
-    for result in response.results:
-        print('Transcript: {}'.format(result.alternatives[0].transcript))
-
+    global usr_loc
     usr_loc = request.form.get('Location')
+    global usr_eml
     usr_eml = request.form.get('Email')
+    global num_mins
     num_mins = request.form.get('NumMinutes')
+    global phrases
     phrases = request.form.get('Phrases')
-
-    print(usr_loc)
-    print(usr_eml)
-    print(num_mins)
-    print(phrases)
-
-#do one phrase for now, we can figure out how to do multiple phrases later
-    if (phrases != None) and (phrases in transcrpt):
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login("campusear@gmail.com", "campusearpassword")
-
-        msg = transcrpt
-        server.sendmail("campusear@gmail.com", "qz3@williams.edu", msg)
-        server.quit()
-
+    print("values have been changed! " + phrases)
     return render_template("index.html")
-
 if __name__ == "__main__":
     app.run(debug=True,port=1051)
+    print("lol wtf web dev")
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\seanl\Downloads\CampusEar-2b476fe18f5a.json"
+# # Instantiates a client
+print("fuck parking services")
+client = speech.SpeechClient()
+while True:
+
+# The name of the audio file to transcribe
+    Popen("script.bat", cwd=r"C:\Users\seanl\Documents\GitHub\CampusEar")
+    time.sleep(4)
+    for file_name in os.listdir(r"C:\Users\seanl\Documents\GitHub\CampusEar\resources\output"):
+        print(file_name)
+
+# Loads the audio into memory
+        with io.open(r"C:\Users\seanl\Documents\GitHub\CampusEar\resources\output" +"\\" + file_name, 'rb') as audio_file:
+            content = audio_file.read()
+            audio = types.RecognitionAudio(content=content)
+            
+        config = types.RecognitionConfig(
+                encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
+                sample_rate_hertz=44100,
+                language_code='en-US')#
+    # Detects speech in the audio file
+        response = client.recognize(config, audio)
+        # print("ended")
+        for result in response.results:
+            transcrpt = ('Transcript: {}'.format(result.alternatives[0].transcript))
+            # print(transcrpt)
+        print(phrases)
+        # print(phrases in transcrpt)
+
+        if (phrases != None) and (phrases in transcrpt):
+            print("we have a match!!!!!")
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("campusear@gmail.com", "campusearpassword")
+            
+            msg = transcrpt
+            server.sendmail("campusear@gmail.com", usr_eml, msg)
+            print(msg)
+            server.quit()
+
+
+        os.remove(r"C:\Users\seanl\Documents\GitHub\CampusEar\resources\output" +"\\" + file_name)
 
 
 
