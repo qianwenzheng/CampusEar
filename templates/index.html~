@@ -11,10 +11,10 @@
     <title>CampusEar</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/the-big-picture.css" rel="stylesheet">
+    <link href="static/the-big-picture.css" rel="stylesheet">
 
   </head>
 
@@ -83,8 +83,8 @@
     </section>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="css/jquery.min.js"></script>
-    <script src="css/bootstrap.bundle.min.js"></script>
+    <script src="static/jquery.min.js"></script>
+    <script src="static/bootstrap.bundle.min.js"></script>
 
   </body>
 

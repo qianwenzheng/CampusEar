@@ -34,11 +34,28 @@
 #     print('Transcript: {}'.format(result.alternatives[0].transcript))
 # =======
 from flask import Flask, render_template
+from flask import request
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route('/', methods=['GET','POST'])
+
+usr_loc = None
+usr_eml = None
+num_mins = None
+phrases = None
+
 def AudioReader():
+    usr_loc = request.form.get('Location')
+    usr_eml = request.form.get('Email')
+    num_mins = request.form.get('NumMinutes')
+    phrases = request.form.get('Phrases')
+    
+    print(usr_loc)
+    print(usr_eml)
+    print(num_mins)
+    print(phrases)
+
     return render_template("index.html")
 
 if __name__ == "__main__":
