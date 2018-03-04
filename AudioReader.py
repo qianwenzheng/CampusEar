@@ -31,15 +31,12 @@ def AudioReader():
     num_mins = request.form.get('NumMinutes')
     global phrases
     phrases = request.form.get('Phrases')
-    print("values have been changed! " + phrases)
     return render_template("index.html")
 if __name__ == "__main__":
     app.run(debug=True,port=1051)
-    print("lol wtf web dev")
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\seanl\Downloads\CampusEar-2b476fe18f5a.json"
 # # Instantiates a client
-print("fuck parking services")
 client = speech.SpeechClient()
 while True:
 
